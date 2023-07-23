@@ -6,9 +6,9 @@ use data_encoding::DecodeError;
 #[derive(Debug, Error)]
 pub enum OtpError {
   #[error(display="invalid time provided")]
-  InvalidTimeError(#[error(source)] SystemTimeError),
+  TimeError(#[error(source)] SystemTimeError),
   #[error(display="invalid digest provided: {:?}", _0)]
   InvalidDigest(Vec<u8>),
   #[error(display="invalid secret provided")]
-  InvalidSecret(#[error(source)] DecodeError)
+  SecretMissing(#[error(source)] DecodeError)
 }
