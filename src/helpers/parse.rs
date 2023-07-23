@@ -1,6 +1,6 @@
 use ring::hmac;
 use regex::Regex;
-use std::convert::TryInto;
+use std::{convert::TryInto, cmp::Ordering};
 use data_encoding::{BASE32_NOPAD, DecodeError};
 use rand::distributions::{Alphanumeric, DistString};
 
@@ -26,21 +26,20 @@ fn replace_number_with_string(input:&str) -> String {
 
 #[doc = "Handle u8 for secret key"]
 fn generate_secret_key(secret: &str) -> String {
-  let secret_key;
-  let secret = secret.replace(" ", "");
+  let secret = secret.replace(' ', "");
   let secret_length = secret.len();
 
-  if secret_length < 16 {
-    let mut rng = rand::thread_rng();
-    let missing_chars = 16 - secret_length;
-    let random_chars = Alphanumeric.sample_string(&mut rng, missing_chars);
+  let secret_key = match secret_length.cmp(&16) {
+    Ordering::Greater => secret[..16].to_string(),
+    Ordering::Less => {
+      let mut rng = rand::thread_rng();
+      let missing_chars = 16 - secret_length;
+      let random_chars = Alphanumeric.sample_string(&mut rng, missing_chars);
 
-    secret_key = format!("{}{}", secret, random_chars);
-  } else if secret_length > 16 {
-    secret_key = secret[..16].to_string();
-  } else {
-    secret_key = secret.to_string();
-  }
+      format!("{}{}", secret, random_chars)
+    },
+    Ordering::Equal => secret.to_string()
+  };
 
   let replaced_key = replace_number_with_string(&secret_key);
 
