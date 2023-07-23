@@ -17,8 +17,5 @@ pub fn make_time_otp(secret: &str, time_step: u64, skew: i64) -> Result<u32, Otp
   let now = SystemTime::now();
   let time_since_epoch = now.duration_since(SystemTime::UNIX_EPOCH)?;
 
-  match make_time_otp_helper(secret, time_step, skew, time_since_epoch.as_secs() ) {
-    Ok(d) => Ok(d),
-    Err(err) => return Err(err)
-  }
+  make_time_otp_helper(secret, time_step, skew, time_since_epoch.as_secs())
 }
