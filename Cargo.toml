@@ -2,14 +2,18 @@
 name = "otp"
 version = "1.0.0"
 authors = ["Sleepy4k <sarahpalastrin@gmail.com>"]
-description = "Service for handle OTP"
+description = "Simple library for generating and verifying one-time passwords (OTP) using the HOTP and TOTP algorithms."
+homepage = "https://github.com/Sleepy4k/rust-otp-code"
+repository = "https://github.com/Sleepy4k/rust-otp-code"
+keywords = ["actix", "actix-web", "otp", "hotp", "totp"]
+categories = ["web-programming", "web-programming::http-server", "web-programming::http-client"]
 edition = "2021"
 
 [dependencies]
 ascii = "1.0"
 data-encoding = "2.1.2"
 err-derive = "0.3.1"
-ring = "0.16.9"
+ring = "0.17.8"
 rand = "0.8.4"
 regex = "1.4"
 
