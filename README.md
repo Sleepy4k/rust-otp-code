@@ -46,7 +46,7 @@ After that you can write it on your lovely code, i already write an example belo
 ```bash
 let secret_key = "YourVerySecretKey";
 let time_step = 3600; // change with your time step config
-let skew = 0
+let skew = 0;
 let generated_otp = make_time_otp(secret.as_str(), time_step, skew).unwrap();
 
 println!("Your OTP Code is : {}", generated_otp);
